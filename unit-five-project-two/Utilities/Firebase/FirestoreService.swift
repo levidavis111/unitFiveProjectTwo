@@ -82,101 +82,55 @@ class FirestoreService {
         }
     }
 //    MARK: - Posts
-    func createPost(){}
+    func createPost(post: Post, completion: @escaping (Result <(), Error>) -> ()){
+        var fields = post.fieldsDict
+        fields["dateCreated"] = Date()
+        db.collection(FireStoreCollections.posts.rawValue).addDocument(data: fields) { (error) in
+            if let error = error {
+                completion(.failure(error))
+            } else {
+                completion(.success(<#T##()#>))
+            }
+        }
+    }
     
+    func getAllPosts(sortingCriteria: SortingCriteria? = nil, completion: @escaping (Result <[Post], Error>) -> ()) {
+        let completionHandler: FIRQuerySnapshotBlock = {(snapshot, error) in
+            if let error = error {
+                completion(.failure(error))
+            } else {
+                let posts = snapshot?.documents.compactMap({ (snapshot) -> Post? in
+                    let postID = snapshot.documentID
+                    let post = Post(from: snapshot.data(), id: postID)
+                    return post
+                })
+                completion(.success(posts ?? []))
+            }
+        }
+        
+        let collection = db.collection(FireStoreCollections.posts.rawValue)
+        if let sortingCriteria = sortingCriteria {
+            let query = collection.order(by: sortingCriteria.rawValue, descending: sortingCriteria.shouldSortDescending)
+            query.getDocuments(completion: completionHandler)
+        } else {
+            collection.getDocuments(completion: completionHandler)
+        }
+    }
+    
+    func getPosts(forUserID: String, completion: @escaping (Result <[Post], Error>) -> ()) {
+        db.collection(FireStoreCollections.posts.rawValue).whereField("creatorID", isEqualTo: forUserID).getDocuments { (snapshot, error) in
+            if let error = error {
+                completion(.failure(error))
+            } else {
+                let posts = snapshot?.documents.compactMap({ (snapshot) -> Post? in
+                    let postID = snapshot.documentID
+                    let post = Post(from: snapshot.data(), id: postID)
+                    return post
+                })
+                completion(.success(posts ?? []))
+            }
+        }
+    }
+    
+    private init() {}
 }
-
-
-/**
-     //MARK: Posts
-     func createPost(post: Post, completion: @escaping (Result<(), Error>) -> ()) {
-         var fields = post.fieldsDict
-         fields["dateCreated"] = Date()
-         db.collection(FireStoreCollections.posts.rawValue).addDocument(data: fields) { (error) in
-             if let error = error {
-                 completion(.failure(error))
-             } else {
-                 completion(.success(()))
-             }
-         }
-     }
-     
-     func getAllPosts(sortingCriteria: SortingCriteria? = nil, completion: @escaping (Result<[Post], Error>) -> ()) {
-         let completionHandler: FIRQuerySnapshotBlock = {(snapshot, error) in
-             if let error = error {
-                 completion(.failure(error))
-             } else {
-                 let posts = snapshot?.documents.compactMap({ (snapshot) -> Post? in
-                     let postID = snapshot.documentID
-                     let post = Post(from: snapshot.data(), id: postID)
-                     return post
-                 })
-                 completion(.success(posts ?? []))
-             }
-         }
-         
-         //type: Collection Reference
-         let collection = db.collection(FireStoreCollections.posts.rawValue)
-         //If i want to sort, or even to filter my collection, it's going to work with an instance of a different type - FIRQuery
-         //collection + sort/filter settings.getDocuments
-         if let sortingCriteria = sortingCriteria {
-             let query = collection.order(by:sortingCriteria.rawValue, descending: sortingCriteria.shouldSortDescending)
-             query.getDocuments(completion: completionHandler)
-         } else {
-             collection.getDocuments(completion: completionHandler)
-         }
-     }
-     
-     func getPosts(forUserID: String, completion: @escaping (Result<[Post], Error>) -> ()) {
-         db.collection(FireStoreCollections.posts.rawValue).whereField("creatorID", isEqualTo: forUserID).getDocuments { (snapshot, error) in
-             if let error = error {
-                 completion(.failure(error))
-             } else {
-                 let posts = snapshot?.documents.compactMap({ (snapshot) -> Post? in
-                     let postID = snapshot.documentID
-                     let post = Post(from: snapshot.data(), id: postID)
-                     return post
-                 })
-                 completion(.success(posts ?? []))
-             }
-         }
-         
-     }
-     
-     //MARK: Comments
-     
-     func createComment(comment: Comment, completion: @escaping (Result<(), Error>) -> ()) {
-         var fields = comment.fieldsDict
-         fields["dateCreated"] = Date()
-         db.collection(FireStoreCollections.comments.rawValue).addDocument(data: fields) { (error) in
-             if let error = error {
-                 completion(.failure(error))
-             } else {
-                 completion(.success(()))
-             }
-         }
-     }
-     
-     func getComments(forPostID: String, completion: @escaping (Result<[Comment], Error>) -> ()) {
-         db.collection(FireStoreCollections.comments.rawValue).whereField("postID", isEqualTo: forPostID).getDocuments { (snapshot, error) in
-             if let error = error {
-                 completion(.failure(error))
-             } else {
-                 let comments = snapshot?.documents.compactMap({ (snapshot) -> Comment? in
-                     let commentID = snapshot.documentID
-                     let comment = Comment(from: snapshot.data(), id: commentID)
-                     return comment
-                 })
-                 completion(.success(comments ?? []))
-             }
-         }
-     }
-     
-     func getComments(forUserID: String, completion: @escaping (Result<[Comment], Error>) -> ()) {
-         
-     }
-     
-     private init () {}
- }
-
- */
