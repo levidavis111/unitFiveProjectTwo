@@ -25,6 +25,7 @@
 		FC0D407C23833530001149F8 /* string+validations.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC0D407B23833530001149F8 /* string+validations.swift */; };
 		FC0D407E23833557001149F8 /* ReuseIdentifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC0D407D23833557001149F8 /* ReuseIdentifiers.swift */; };
 		FC0D408123833BCD001149F8 /* AppUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC0D408023833BCD001149F8 /* AppUser.swift */; };
+		FC0D4083238346CC001149F8 /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC0D4082238346CC001149F8 /* Post.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -50,6 +51,7 @@
 		FC0D407B23833530001149F8 /* string+validations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "string+validations.swift"; sourceTree = "<group>"; };
 		FC0D407D23833557001149F8 /* ReuseIdentifiers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReuseIdentifiers.swift; sourceTree = "<group>"; };
 		FC0D408023833BCD001149F8 /* AppUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppUser.swift; sourceTree = "<group>"; };
+		FC0D4082238346CC001149F8 /* Post.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -184,6 +186,7 @@
 			isa = PBXGroup;
 			children = (
 				FC0D408023833BCD001149F8 /* AppUser.swift */,
+				FC0D4082238346CC001149F8 /* Post.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -312,6 +315,7 @@
 				FC0D406C23833325001149F8 /* ImageUploadViewController.swift in Sources */,
 				FC0D406823833304001149F8 /* ProfileViewController.swift in Sources */,
 				FC0D4075238334C0001149F8 /* FirebaseAuthService.swift in Sources */,
+				FC0D4083238346CC001149F8 /* Post.swift in Sources */,
 				FC0D4066238332EE001149F8 /* SignUpViewController.swift in Sources */,
 				FC0D406A23833314001149F8 /* FeedViewController.swift in Sources */,
 				FC0D404C23832685001149F8 /* SceneDelegate.swift in Sources */,
