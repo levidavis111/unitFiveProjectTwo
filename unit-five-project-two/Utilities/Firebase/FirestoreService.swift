@@ -28,6 +28,10 @@ enum SortingCriteria: String {
         static let manager = FirestoreService()
         
         private let db = Firestore.firestore()
+        
+//        MARK: - AppUsers
+        
+//        func createAppUser(user: AppUser)
     }
 }
 

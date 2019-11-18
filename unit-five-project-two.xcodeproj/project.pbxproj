@@ -24,6 +24,7 @@
 		FC0D4079238334FB001149F8 /* FirebaseStorageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC0D4078238334FB001149F8 /* FirebaseStorageService.swift */; };
 		FC0D407C23833530001149F8 /* string+validations.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC0D407B23833530001149F8 /* string+validations.swift */; };
 		FC0D407E23833557001149F8 /* ReuseIdentifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC0D407D23833557001149F8 /* ReuseIdentifiers.swift */; };
+		FC0D408123833BCD001149F8 /* AppUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC0D408023833BCD001149F8 /* AppUser.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -48,6 +49,7 @@
 		FC0D4078238334FB001149F8 /* FirebaseStorageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseStorageService.swift; sourceTree = "<group>"; };
 		FC0D407B23833530001149F8 /* string+validations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "string+validations.swift"; sourceTree = "<group>"; };
 		FC0D407D23833557001149F8 /* ReuseIdentifiers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReuseIdentifiers.swift; sourceTree = "<group>"; };
+		FC0D408023833BCD001149F8 /* AppUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppUser.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -101,6 +103,7 @@
 			isa = PBXGroup;
 			children = (
 				FC0D406223833291001149F8 /* Controllers */,
+				FC0D407F23833BB0001149F8 /* Models */,
 				FC0D406123833280001149F8 /* Supporting Files */,
 				FC0D407223833486001149F8 /* Utilities */,
 				FC0D405F238330C7001149F8 /* GoogleService-Info.plist */,
@@ -175,6 +178,14 @@
 				FC0D407B23833530001149F8 /* string+validations.swift */,
 			);
 			path = Extensions;
+			sourceTree = "<group>";
+		};
+		FC0D407F23833BB0001149F8 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				FC0D408023833BCD001149F8 /* AppUser.swift */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -292,6 +303,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FC0D408123833BCD001149F8 /* AppUser.swift in Sources */,
 				FC0D4064238332D7001149F8 /* LoginViewController.swift in Sources */,
 				FC0D4077238334E3001149F8 /* FirestoreService.swift in Sources */,
 				FC0D407E23833557001149F8 /* ReuseIdentifiers.swift in Sources */,
