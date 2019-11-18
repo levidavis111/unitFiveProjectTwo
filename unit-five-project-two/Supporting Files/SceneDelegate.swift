@@ -22,12 +22,14 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window = UIWindow(frame: UIScreen.main.bounds)
         window?.windowScene = scene
         
-        if FirebaseAuthService.manager.currentUser != nil {}
+        if FirebaseAuthService.manager.currentUser != nil {
+            window?.rootViewController = FeedViewController()
+            window?.makeKeyAndVisible()
+        } else {
+            window?.rootViewController = LoginViewController()
+            window?.makeKeyAndVisible()
+        }
 
-        //MARK: TODO - switch root view controller on firebase current user.
-        //Discussion - is the iOS currentUser object token-safe with the authentication service?
-        window?.rootViewController = LoginViewController()
-        window?.makeKeyAndVisible()
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {
