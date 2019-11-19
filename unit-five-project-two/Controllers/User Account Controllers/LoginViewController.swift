@@ -64,11 +64,14 @@ class LoginViewController: UIViewController {
         let attributedTitle = NSMutableAttributedString(string: "Dont have an account?  ",
                                                         attributes: [
                                                             NSAttributedString.Key.font: UIFont(name: "Verdana", size: 14)!,
-                                                            NSAttributedString.Key.foregroundColor: UIColor.white])
+                                                            NSAttributedString.Key.foregroundColor: UIColor(red: 17/255, green: 154/255, blue: 237/255, alpha: 1)])
         attributedTitle.append(NSAttributedString(string: "Sign Up",
                                                   attributes: [NSAttributedString.Key.font: UIFont(name: "Verdana-Bold", size: 14)!,
                                                                NSAttributedString.Key.foregroundColor:  UIColor(red: 17/255, green: 154/255, blue: 237/255, alpha: 1)]))
         button.setAttributedTitle(attributedTitle, for: .normal)
+        //        button.setTitle("Sign Up", for: .normal)
+        //        button.backgroundColor = .white
+        //        button.setTitleColor(#colorLiteral(red: 0.1764705926, green: 0.4980392158, blue: 0.7568627596, alpha: 1), for: .normal)
         button.addTarget(self, action: #selector(showSignUp), for: .touchUpInside)
         return button
     }()
@@ -146,7 +149,7 @@ class LoginViewController: UIViewController {
             //            MARK: TODO - refactor this logic into scene delegate
             UIView.transition(with: window, duration: 0.3, options: .transitionFlipFromBottom, animations: {
                 if FirebaseAuthService.manager.currentUser?.photoURL != nil {
-                    window.rootViewController = TabBarController()
+                    window.rootViewController = TabBarViewController()
                 } else {
                     window.rootViewController = {
                         let profileSetupVC = EditProfileViewController()
@@ -195,6 +198,7 @@ class LoginViewController: UIViewController {
         view.addSubview(createAccountButton)
         
         createAccountButton.translatesAutoresizingMaskIntoConstraints = false
+       
         NSLayoutConstraint.activate([
             createAccountButton.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             createAccountButton.trailingAnchor.constraint(equalTo: view.trailingAnchor),

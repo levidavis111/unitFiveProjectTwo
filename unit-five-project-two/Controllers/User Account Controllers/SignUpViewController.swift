@@ -117,6 +117,7 @@ class SignUpViewController: UIViewController {
                        self?.handleCreatedUserInFirestore(result: newResult)
                    }
                case .failure(let error):
+                print(error)
                    self?.showAlert(with: "Error creating user", and: "An error occured while creating new account \(error)")
                }
            }
