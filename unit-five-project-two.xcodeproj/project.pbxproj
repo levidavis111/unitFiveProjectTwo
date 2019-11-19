@@ -26,6 +26,7 @@
 		FC0D407E23833557001149F8 /* ReuseIdentifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC0D407D23833557001149F8 /* ReuseIdentifiers.swift */; };
 		FC0D408123833BCD001149F8 /* AppUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC0D408023833BCD001149F8 /* AppUser.swift */; };
 		FC0D4083238346CC001149F8 /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC0D4082238346CC001149F8 /* Post.swift */; };
+		FC0D4085238450D5001149F8 /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC0D4084238450D5001149F8 /* TabBarViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -52,6 +53,7 @@
 		FC0D407D23833557001149F8 /* ReuseIdentifiers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReuseIdentifiers.swift; sourceTree = "<group>"; };
 		FC0D408023833BCD001149F8 /* AppUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppUser.swift; sourceTree = "<group>"; };
 		FC0D4082238346CC001149F8 /* Post.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
+		FC0D4084238450D5001149F8 /* TabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -128,6 +130,7 @@
 		FC0D406223833291001149F8 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				FC0D4084238450D5001149F8 /* TabBarViewController.swift */,
 				FC0D406F23833347001149F8 /* User Account Controllers */,
 				FC0D407023833364001149F8 /* Image View Controllers */,
 			);
@@ -306,6 +309,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FC0D4085238450D5001149F8 /* TabBarViewController.swift in Sources */,
 				FC0D408123833BCD001149F8 /* AppUser.swift in Sources */,
 				FC0D4064238332D7001149F8 /* LoginViewController.swift in Sources */,
 				FC0D4077238334E3001149F8 /* FirestoreService.swift in Sources */,

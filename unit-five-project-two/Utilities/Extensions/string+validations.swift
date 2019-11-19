@@ -17,7 +17,7 @@ extension String {
         return emailPredicate.evaluate(with: self)
     }
     
-    var isPasswordValid: Bool {
+    var isValidPassword: Bool {
         //this pattern requires that a password be at least 8 characters long
         let validPasswordRegEx =  "[A-Z0-9a-z!@#$&*.-]{8,}"
         let passwordPredicate = NSPredicate(format: "SELF MATCHES %@", validPasswordRegEx)

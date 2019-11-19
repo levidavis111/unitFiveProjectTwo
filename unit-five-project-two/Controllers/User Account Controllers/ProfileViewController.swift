@@ -10,6 +10,9 @@ import UIKit
 
 class ProfileViewController: UIViewController {
 
+    var user: AppUser!
+    var isCurrentUser: Bool!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 

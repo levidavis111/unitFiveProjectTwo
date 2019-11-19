@@ -39,7 +39,7 @@ class FirestoreService {
             if let error = error {
                 completion(.failure(error))
             }
-            completion(.success(<#T##()#>))
+            completion(.success(()))
         }
     }
     
@@ -62,7 +62,7 @@ class FirestoreService {
             if let error = error {
                 completion(.failure(error))
             } else {
-                completion(.success(<#T##()#>))
+                completion(.success(()))
             }
         }
     }
@@ -89,7 +89,7 @@ class FirestoreService {
             if let error = error {
                 completion(.failure(error))
             } else {
-                completion(.success(<#T##()#>))
+                completion(.success(()))
             }
         }
     }

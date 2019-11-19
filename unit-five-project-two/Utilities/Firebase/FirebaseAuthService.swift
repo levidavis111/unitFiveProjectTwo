@@ -45,7 +45,7 @@ class FirebaseAuthService {
             if let error = error {
                 completion(.failure(error))
             } else {
-                completion(.success(<#T##()#>))
+                completion(.success(()))
             }
         })
     }
@@ -55,7 +55,7 @@ class FirebaseAuthService {
 //            if let user = result?.user {}
             
             if result?.user != nil {
-                completion(.success(<#T##()#>))
+                completion(.success(()))
             } else if let error = error {
                 completion(.failure(error))
             }

@@ -23,7 +23,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window?.windowScene = scene
         
         if FirebaseAuthService.manager.currentUser != nil {
-            window?.rootViewController = FeedViewController()
+            window?.rootViewController = TabBarViewController()
             window?.makeKeyAndVisible()
         } else {
             window?.rootViewController = LoginViewController()

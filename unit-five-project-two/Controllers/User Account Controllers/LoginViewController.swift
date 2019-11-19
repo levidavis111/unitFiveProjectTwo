@@ -72,22 +72,133 @@ class LoginViewController: UIViewController {
         button.addTarget(self, action: #selector(showSignUp), for: .touchUpInside)
         return button
     }()
-
+    
+    //MARK: Lifecycle methods
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        view.backgroundColor = .white
+        setupSubViews()
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    //MARK: Obj-C methods
+    
+    @objc func validateFields() {
+        guard emailTextField.hasText, passwordTextField.hasText else {
+            loginButton.backgroundColor = UIColor(red: 255/255, green: 67/255, blue: 0/255, alpha: 0.5)
+            loginButton.isEnabled = false
+            return
+        }
+        loginButton.isEnabled = true
+        loginButton.backgroundColor = UIColor(red: 255/255, green: 67/255, blue: 0/255, alpha: 1)
     }
-    */
-
+    
+    @objc func showSignUp() {
+        let signupVC = SignUpViewController()
+        signupVC.modalPresentationStyle = .formSheet
+        present(signupVC, animated: true, completion: nil)
+    }
+    
+    @objc func tryLogin() {
+        guard let email = emailTextField.text, let password = passwordTextField.text else {
+            showAlert(with: "Error", and: "Please fill out all fields.")
+            return
+        }
+        
+        //MARK: TODO - remove whitespace (if any) from email/password
+        
+        guard email.isValidEmail else {
+            showAlert(with: "Error", and: "Please enter a valid email")
+            return
+        }
+        
+        guard password.isValidPassword else {
+            showAlert(with: "Error", and: "Please enter a valid password. Passwords must have at least 8 characters.")
+            return
+        }
+        
+        FirebaseAuthService.manager.loginUser(email: email.lowercased(), password: password) { (result) in
+            self.handleLoginResponse(with: result)
+        }
+    }
+    
+    //MARK: Private methods
+    
+    private func showAlert(with title: String, and message: String) {
+        let alertVC = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        alertVC.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
+        present(alertVC, animated: true, completion: nil)
+    }
+    
+    private func handleLoginResponse(with result: Result<(), Error>) {
+        switch result {
+        case .failure(let error):
+            showAlert(with: "Error", and: "Could not log in. Error: \(error)")
+        case .success:
+            
+            guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+                let sceneDelegate = windowScene.delegate as? SceneDelegate, let window = sceneDelegate.window
+                else {
+                    //MARK: TODO - handle could not swap root view controller
+                    return
+            }
+            
+            //MARK: TODO - refactor this logic into scene delegate
+            //                UIView.transition(with: window, duration: 0.3, options: .transitionFlipFromBottom, animations: {
+            //                    if FirebaseAuthService.manager.currentUser?.photoURL != nil {
+            //                        window.rootViewController = RedditTabBarViewController()
+            //                    } else {
+            //                        window.rootViewController = {
+            //                            let profileSetupVC = ProfileEditViewController()
+            //                            profileSetupVC.settingFromLogin = true
+            //                            return profileSetupVC
+            //                        }()
+            //                    }
+            //                }, completion: nil)
+        }
+    }
+    
+    //MARK: UI Setup
+    
+    private func setupSubViews() {
+        setupLogoLabel()
+        setupCreateAccountButton()
+        setupLoginStackView()
+    }
+    
+    private func setupLogoLabel() {
+        view.addSubview(logoLabel)
+        
+        logoLabel.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            logoLabel.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: 60),
+            logoLabel.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor, constant: 16),
+            logoLabel.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor, constant: -16)])
+    }
+    
+    private func setupLoginStackView() {
+        let stackView = UIStackView(arrangedSubviews: [emailTextField, passwordTextField,loginButton])
+        stackView.axis = .vertical
+        stackView.spacing = 15
+        stackView.distribution = .fillEqually
+        self.view.addSubview(stackView)
+        
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            stackView.bottomAnchor.constraint(equalTo: createAccountButton.topAnchor, constant: -50),
+            stackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            stackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+            stackView.heightAnchor.constraint(equalToConstant: 130)])
+    }
+    
+    private func setupCreateAccountButton() {
+        view.addSubview(createAccountButton)
+        
+        createAccountButton.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            createAccountButton.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            createAccountButton.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            createAccountButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+            createAccountButton.heightAnchor.constraint(equalToConstant: 50)])
+    }
 }
