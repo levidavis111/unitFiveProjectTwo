@@ -1,18 +1,17 @@
 //
-//  ProfileViewController.swift
+//  EditProfileViewController.swift
 //  unit-five-project-two
 //
-//  Created by Levi Davis on 11/18/19.
+//  Created by Levi Davis on 11/19/19.
 //  Copyright © 2019 Levi Davis. All rights reserved.
 //
 
 import UIKit
 
-class ProfileViewController: UIViewController {
-
-    var user: AppUser!
-    var isCurrentUser = false
+class EditProfileViewController: UITabBarController {
     
+    var settingFromLogin = false
+
     override func viewDidLoad() {
         super.viewDidLoad()
 

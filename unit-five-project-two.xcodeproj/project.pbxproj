@@ -27,6 +27,7 @@
 		FC0D408123833BCD001149F8 /* AppUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC0D408023833BCD001149F8 /* AppUser.swift */; };
 		FC0D4083238346CC001149F8 /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC0D4082238346CC001149F8 /* Post.swift */; };
 		FC0D4085238450D5001149F8 /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC0D4084238450D5001149F8 /* TabBarViewController.swift */; };
+		FC0D408723846160001149F8 /* EditProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC0D408623846160001149F8 /* EditProfileViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -54,6 +55,7 @@
 		FC0D408023833BCD001149F8 /* AppUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppUser.swift; sourceTree = "<group>"; };
 		FC0D4082238346CC001149F8 /* Post.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
 		FC0D4084238450D5001149F8 /* TabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarViewController.swift; sourceTree = "<group>"; };
+		FC0D408623846160001149F8 /* EditProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -143,6 +145,7 @@
 				FC0D4063238332D7001149F8 /* LoginViewController.swift */,
 				FC0D4065238332EE001149F8 /* SignUpViewController.swift */,
 				FC0D406723833304001149F8 /* ProfileViewController.swift */,
+				FC0D408623846160001149F8 /* EditProfileViewController.swift */,
 			);
 			path = "User Account Controllers";
 			sourceTree = "<group>";
@@ -319,6 +322,7 @@
 				FC0D406C23833325001149F8 /* ImageUploadViewController.swift in Sources */,
 				FC0D406823833304001149F8 /* ProfileViewController.swift in Sources */,
 				FC0D4075238334C0001149F8 /* FirebaseAuthService.swift in Sources */,
+				FC0D408723846160001149F8 /* EditProfileViewController.swift in Sources */,
 				FC0D4083238346CC001149F8 /* Post.swift in Sources */,
 				FC0D4066238332EE001149F8 /* SignUpViewController.swift in Sources */,
 				FC0D406A23833314001149F8 /* FeedViewController.swift in Sources */,

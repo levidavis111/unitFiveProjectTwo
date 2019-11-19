@@ -143,18 +143,18 @@ class LoginViewController: UIViewController {
                     return
             }
             
-            //MARK: TODO - refactor this logic into scene delegate
-            //                UIView.transition(with: window, duration: 0.3, options: .transitionFlipFromBottom, animations: {
-            //                    if FirebaseAuthService.manager.currentUser?.photoURL != nil {
-            //                        window.rootViewController = RedditTabBarViewController()
-            //                    } else {
-            //                        window.rootViewController = {
-            //                            let profileSetupVC = ProfileEditViewController()
-            //                            profileSetupVC.settingFromLogin = true
-            //                            return profileSetupVC
-            //                        }()
-            //                    }
-            //                }, completion: nil)
+            //            MARK: TODO - refactor this logic into scene delegate
+            UIView.transition(with: window, duration: 0.3, options: .transitionFlipFromBottom, animations: {
+                if FirebaseAuthService.manager.currentUser?.photoURL != nil {
+                    window.rootViewController = TabBarController()
+                } else {
+                    window.rootViewController = {
+                        let profileSetupVC = EditProfileViewController()
+                        profileSetupVC.settingFromLogin = true
+                        return profileSetupVC
+                    }()
+                }
+            }, completion: nil)
         }
     }
     
