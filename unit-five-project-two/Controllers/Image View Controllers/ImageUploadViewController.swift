@@ -12,8 +12,30 @@ import Photos
 class ImageUploadViewController: UIViewController {
     //MARK: UI Objects
     
+    var image = UIImage(named: "default") {
+        didSet {
+            selectedImageView.image = image
+        }
+    }
+    
     var imageURL: URL? = nil
     
+    lazy var selectedImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.image = self.image
+        return imageView
+    }()
+    
+    lazy var addImageButton: UIButton = {
+        let button = UIButton()
+        button.showsTouchWhenHighlighted = true
+        button.isEnabled = true
+        button.backgroundColor = .white
+        button.setTitle("Add Image", for: .normal)
+        button.setTitleColor(.black, for: .normal)
+        button.addTarget(self, action: #selector(addImagePressed), for: .touchUpInside)
+        return button
+    }()
     
     lazy var postButton: UIButton = {
         let button = UIButton()
@@ -31,10 +53,33 @@ class ImageUploadViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
+        setupImageView()
+        setupAddImageButton()
         setupPostButton()
     }
     
     //MARK: Obj-C Methods
+    
+    @objc private func addImagePressed() {
+        //MARK: TODO - action sheet with multiple media options
+        switch PHPhotoLibrary.authorizationStatus() {
+        case .notDetermined, .denied, .restricted:
+            PHPhotoLibrary.requestAuthorization({[weak self] status in
+                switch status {
+                case .authorized:
+                    self?.presentPhotoPickerController()
+                case .denied:
+                    //MARK: TODO - set up more intuitive UI interaction
+                    print("Denied photo library permissions")
+                default:
+                    //MARK: TODO - set up more intuitive UI interaction
+                    print("No usable status")
+                }
+            })
+        default:
+            presentPhotoPickerController()
+        }
+    }
     
     @objc func postButtonPressed() {
         
@@ -51,6 +96,17 @@ class ImageUploadViewController: UIViewController {
     }
     
     //MARK: Private methods
+    
+    private func presentPhotoPickerController() {
+        DispatchQueue.main.async{
+            let imagePickerViewController = UIImagePickerController()
+            imagePickerViewController.delegate = self
+            imagePickerViewController.sourceType = .photoLibrary
+            imagePickerViewController.allowsEditing = true
+//            imagePickerViewController.mediaTypes = ["public.image"]
+            self.present(imagePickerViewController, animated: true, completion: nil)
+        }
+    }
     
     private func handlePostResponse(withResult result: Result<Void, Error>) {
         switch result {
@@ -77,13 +133,27 @@ class ImageUploadViewController: UIViewController {
     
     //MARK: UI Setup
     
-   
+    private func setupImageView() {
+        view.addSubview(selectedImageView)
+        selectedImageView.translatesAutoresizingMaskIntoConstraints = false
+        [selectedImageView.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
+         selectedImageView.centerYAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerYAnchor, constant: -100),
+         selectedImageView.heightAnchor.constraint(equalToConstant: 200),
+         selectedImageView.widthAnchor.constraint(equalToConstant: 200)].forEach{$0.isActive = true}
+    }
     
     private func setupPostButton() {
         view.addSubview(postButton)
         postButton.translatesAutoresizingMaskIntoConstraints = false
         [postButton.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
-         postButton.centerYAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerYAnchor)].forEach{$0.isActive = true}
+         postButton.topAnchor.constraint(equalTo: addImageButton.bottomAnchor, constant: 30)].forEach{$0.isActive = true}
+    }
+    
+    private func setupAddImageButton() {
+        view.addSubview(addImageButton)
+        addImageButton.translatesAutoresizingMaskIntoConstraints = false
+        [addImageButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+         addImageButton.topAnchor.constraint(equalTo: selectedImageView.bottomAnchor, constant: 30)].forEach{$0.isActive = true}
     }
     
 }

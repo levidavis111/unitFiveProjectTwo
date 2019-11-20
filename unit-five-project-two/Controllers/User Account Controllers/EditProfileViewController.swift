@@ -131,7 +131,7 @@ class EditProfileViewController: UITabBarController {
             imagePickerViewController.delegate = self
             imagePickerViewController.sourceType = .photoLibrary
             imagePickerViewController.allowsEditing = true
-            imagePickerViewController.mediaTypes = ["public.image"]
+//            imagePickerViewController.mediaTypes = ["public.image"]
             self.present(imagePickerViewController, animated: true, completion: nil)
         }
     }
