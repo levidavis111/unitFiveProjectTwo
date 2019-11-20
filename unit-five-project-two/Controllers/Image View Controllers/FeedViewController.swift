@@ -14,10 +14,21 @@ class FeedViewController: UIViewController {
     let user = FirebaseAuthService.manager.currentUser
     
     lazy var collectionView: UICollectionView = {
-        let collectionView = UICollectionView()
-        
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .vertical
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        collectionView.backgroundColor = .white
+        collectionView.register(<#T##cellClass: AnyClass?##AnyClass?#>, forCellWithReuseIdentifier: <#T##String#>)
         return collectionView
     }()
+    
+    /**
+     let layout = UICollectionViewFlowLayout()
+     layout.scrollDirection = .horizontal
+     let collectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: layout)
+     collectionView.backgroundColor = .clear
+     collectionView.register(MapCollectionViewCell.self, forCellWithReuseIdentifier: ReuseIdentifier.mapCollectionViewCell.rawValue)
+     */
 
     override func viewDidLoad() {
         super.viewDidLoad()
