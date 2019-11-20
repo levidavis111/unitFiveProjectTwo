@@ -23,7 +23,7 @@ enum SortingCriteria: String {
         }
     }
 }
-    
+
 class FirestoreService {
     
     static let manager = FirestoreService()
@@ -57,7 +57,7 @@ class FirestoreService {
             updateFields["photoURL"] = photo.absoluteString
         }
         
-//        PUT request
+        //        PUT request
         db.collection(FireStoreCollections.users.rawValue).document(userID).updateData(updateFields) { (error) in
             if let error = error {
                 completion(.failure(error))
@@ -81,7 +81,7 @@ class FirestoreService {
             }
         }
     }
-//    MARK: - Posts
+    //    MARK: - Posts
     func createPost(post: Post, completion: @escaping (Result <(), Error>) -> ()){
         var fields = post.fieldsDict
         fields["dateCreated"] = Date()
@@ -118,6 +118,8 @@ class FirestoreService {
     }
     
     func getPosts(forUserID: String, completion: @escaping (Result <[Post], Error>) -> ()) {
+        
+        
         db.collection(FireStoreCollections.posts.rawValue).whereField("creatorID", isEqualTo: forUserID).getDocuments { (snapshot, error) in
             if let error = error {
                 completion(.failure(error))
