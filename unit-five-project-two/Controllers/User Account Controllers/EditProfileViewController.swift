@@ -23,17 +23,17 @@ class EditProfileViewController: UITabBarController {
     
     lazy var imageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.backgroundColor = .black
-        imageView.image = UIImage(systemName: "person")
+        imageView.backgroundColor = .white
+        imageView.image = UIImage(systemName: "person.circle.fill")
         return imageView
     }()
     
     lazy var addImageButton: UIButton = {
         let button = UIButton()
         button.setTitle("Add Image", for: .normal)
-        button.setTitleColor(.white, for: .normal)
+        button.setTitleColor(.black, for: .normal)
         button.titleLabel?.font = UIFont(name: "Verdana-Bold", size: 14)
-        button.backgroundColor = UIColor(red: 255/255, green: 67/255, blue: 0/255, alpha: 1)
+        button.backgroundColor = .white
         button.layer.cornerRadius = 5
         button.addTarget(self, action: #selector(addImagePressed), for: .touchUpInside)
         return button
@@ -53,9 +53,9 @@ class EditProfileViewController: UITabBarController {
     lazy var saveButton: UIButton = {
         let button = UIButton()
         button.setTitle("Save Profile", for: .normal)
-        button.setTitleColor(.white, for: .normal)
+        button.setTitleColor(.black, for: .normal)
         button.titleLabel?.font = UIFont(name: "Verdana-Bold", size: 14)
-        button.backgroundColor = UIColor(red: 255/255, green: 67/255, blue: 0/255, alpha: 1)
+        button.backgroundColor = .white
         button.layer.cornerRadius = 5
         button.addTarget(self, action: #selector(savePressed), for: .touchUpInside)
         return button
@@ -63,7 +63,7 @@ class EditProfileViewController: UITabBarController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = .gray
+        self.view.backgroundColor = .white
         setupViews()
         //MARK: TODO - load in user image and fields when coming from profile page
     }
@@ -165,10 +165,10 @@ class EditProfileViewController: UITabBarController {
         
         imageView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            imageView.centerYAnchor.constraint(equalTo: self.view.centerYAnchor),
+            imageView.centerYAnchor.constraint(equalTo: self.view.centerYAnchor, constant: -100),
             imageView.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
-            imageView.heightAnchor.constraint(equalToConstant: self.view.bounds.width / 2),
-            imageView.widthAnchor.constraint(equalToConstant: self.view.bounds.width / 2)
+            imageView.heightAnchor.constraint(equalToConstant: 100),
+            imageView.widthAnchor.constraint(equalToConstant: 100)
         ])
     }
     
@@ -200,12 +200,14 @@ class EditProfileViewController: UITabBarController {
         view.addSubview(saveButton)
         
         saveButton.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            saveButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 10),
-            saveButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10),
-            saveButton.heightAnchor.constraint(equalToConstant: 30),
-            saveButton.widthAnchor.constraint(equalToConstant: view.bounds.width / 3)
-        ])
+        [saveButton.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
+         saveButton.topAnchor.constraint(equalTo: addImageButton.bottomAnchor, constant: 50)].forEach{$0.isActive = true}
+//        NSLayoutConstraint.activate([
+//            saveButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 10),
+//            saveButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10),
+//            saveButton.heightAnchor.constraint(equalToConstant: 30),
+//            saveButton.widthAnchor.constraint(equalToConstant: view.bounds.width / 3)
+//        ])
     }
 }
 
@@ -235,6 +237,3 @@ extension EditProfileViewController: UIImagePickerControllerDelegate, UINavigati
         dismiss(animated: true, completion: nil)
     }
 }
-
-
-

@@ -28,6 +28,8 @@
 		FC0D4085238450D5001149F8 /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC0D4084238450D5001149F8 /* TabBarViewController.swift */; };
 		FC0D408723846160001149F8 /* EditProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC0D408623846160001149F8 /* EditProfileViewController.swift */; };
 		FC0D408B238473D5001149F8 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = FC0D408A238473D5001149F8 /* GoogleService-Info.plist */; };
+		FC0D408E2384A68D001149F8 /* ImageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC0D408D2384A68D001149F8 /* ImageManager.swift */; };
+		FC0D40902384A6A8001149F8 /* AppError.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC0D408F2384A6A8001149F8 /* AppError.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -57,6 +59,8 @@
 		FC0D408623846160001149F8 /* EditProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileViewController.swift; sourceTree = "<group>"; };
 		FC0D408A238473D5001149F8 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		FC0D408C238473E8001149F8 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		FC0D408D2384A68D001149F8 /* ImageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageManager.swift; sourceTree = "<group>"; };
+		FC0D408F2384A6A8001149F8 /* AppError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppError.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -166,6 +170,8 @@
 			children = (
 				FC0D408A238473D5001149F8 /* GoogleService-Info.plist */,
 				FC0D407D23833557001149F8 /* ReuseIdentifiers.swift */,
+				FC0D408D2384A68D001149F8 /* ImageManager.swift */,
+				FC0D408F2384A6A8001149F8 /* AppError.swift */,
 				FC0D407A23833511001149F8 /* Extensions */,
 				FC0D407323833494001149F8 /* Firebase */,
 			);
@@ -316,7 +322,9 @@
 			files = (
 				FC0D4085238450D5001149F8 /* TabBarViewController.swift in Sources */,
 				FC0D408123833BCD001149F8 /* AppUser.swift in Sources */,
+				FC0D40902384A6A8001149F8 /* AppError.swift in Sources */,
 				FC0D4064238332D7001149F8 /* LoginViewController.swift in Sources */,
+				FC0D408E2384A68D001149F8 /* ImageManager.swift in Sources */,
 				FC0D4077238334E3001149F8 /* FirestoreService.swift in Sources */,
 				FC0D407E23833557001149F8 /* ReuseIdentifiers.swift in Sources */,
 				FC0D4079238334FB001149F8 /* FirebaseStorageService.swift in Sources */,

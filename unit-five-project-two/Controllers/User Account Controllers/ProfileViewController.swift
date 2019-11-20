@@ -9,7 +9,7 @@
 import UIKit
 
 class ProfileViewController: UIViewController {
-
+    
     var user: AppUser!
     var isCurrentUser = false
     
@@ -28,53 +28,80 @@ class ProfileViewController: UIViewController {
         label.text = "You have \(posts.count) posts"
         return label
     }()
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        view.backgroundColor = .white
+        addSubviews()
+        constrainSubviews()
+        setupNavigation()
+        setupNavItems()
         
-        override func viewDidLoad() {
-            super.viewDidLoad()
-            view.backgroundColor = .white
-            addSubviews()
-            constrainSubviews()
-            setupNavigation()
-            let button = UIBarButtonItem(title: "logout", style: .plain, target: self, action: #selector(logout))
-            self.navigationItem.rightBarButtonItem = button
-            
-        }
-        
-        override func viewWillAppear(_ animated: Bool) {
-            super.viewWillAppear(animated)
-            getPostsForThisUser()
-        }
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        setUserImage()
+        getPostsForThisUser()
+    }
+    
+    @objc private func editProfile() {
+        navigationController?.pushViewController(EditProfileViewController(), animated: true)
+    }
     
     @objc private func logout() {
         FirebaseAuthService.manager.logoutUser()
+        navigationController?.pushViewController(LoginViewController(), animated: true)
     }
-        
-        @objc private func editProfile() {
-            navigationController?.pushViewController(EditProfileViewController(), animated: true)
-        }
-        
-        private func getPostsForThisUser() {
-            DispatchQueue.global(qos: .userInitiated).async { [weak self] in
-                FirestoreService.manager.getPosts(forUserID: self?.user.uid ?? "") { (result) in
-                    switch result {
-                    case .success(let posts):
-                        self?.posts = posts
-                    case .failure(let error):
-                        print(":( \(error)")
-                    }
+    
+    
+    private func getPostsForThisUser() {
+        DispatchQueue.global(qos: .userInitiated).async { [weak self] in
+            FirestoreService.manager.getPosts(forUserID: self?.user.uid ?? "") { (result) in
+                switch result {
+                case .success(let posts):
+                    self?.posts = posts
+                case .failure(let error):
+                    print(":( \(error)")
                 }
             }
         }
-        
-        private func setupNavigation() {
-            self.title = "Profile"
-            if isCurrentUser {
-                self.navigationItem.rightBarButtonItem =
-                    UIBarButtonItem(image: UIImage(systemName: "pencil.circle"), style: .plain, target: self, action: #selector(editProfile))
-            }
-        }
-        
     }
+    private func setupNavItems() {
+        let leftButton = UIBarButtonItem(title: "logout", style: .plain, target: self, action: #selector(logout))
+        let rightButton = UIBarButtonItem(title: "edit", style: .plain, target: self, action: #selector(editProfile))
+        self.navigationItem.leftBarButtonItem = leftButton
+        self.navigationItem.rightBarButtonItem = rightButton
+    }
+    
+    private func setupNavigation() {
+        self.title = "Profile"
+        if isCurrentUser {
+            self.navigationItem.rightBarButtonItem =
+                UIBarButtonItem(image: UIImage(systemName: "pencil.circle"), style: .plain, target: self, action: #selector(editProfile))
+        }
+    }
+    private func setUserImage() {
+        if let userImageURL = self.user.photoURL {
+            
+            ImageManager.manager.getImage(urlStr: userImageURL) { (result) in
+                switch result {
+                case.failure(let error):
+                    print(error)
+                case .success(let image):
+                    DispatchQueue.main.async {
+                        self.profileImageView.image = image
+                    }
+                    
+                }
+            }
+            
+        } else {
+            self.profileImageView.image = UIImage(systemName: "person.circle.fill")
+        }
+    }
+    
+}
 
 extension ProfileViewController {
     private func addSubviews() {
