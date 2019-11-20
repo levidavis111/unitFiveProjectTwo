@@ -82,20 +82,52 @@ class ImageUploadViewController: UIViewController {
     }
     
     @objc func postButtonPressed() {
-        
-        
-//        guard let user = FirebaseAuthService.manager.currentUser else {
-//            showAlert(with: "Error", and: "You must be logged in to create a post")
-//            return
-//        }
-//
-//        let newPost = Post(photoURL: <#T##String#>, id: <#T##String#>, creatorID: <#T##String#>)
-//        FirestoreService.manager.createPost(post: newPost) { (result) in
-//            self.handlePostResponse(withResult: result)
-//        }
+        storeImage()
+        createPost()
     }
     
     //MARK: Private methods
+    
+    private func createPost() {
+
+        guard let photoURL = self.imageURL else {return}
+        let photoURLString = "\(photoURL)"
+        guard let user = FirebaseAuthService.manager.currentUser else {return}
+        
+        let newPost = Post(photoURL: photoURLString, creatorID: user.uid)
+        FirestoreService.manager.createPost(post: newPost) { (result) in
+            switch result {
+            case .failure(let error):
+                print(error)
+            case .success(()):
+                self.showAlert(with: "Posted!", and: "Yay!")
+
+            }
+        }
+        
+    }
+    
+    private func storeImage() {
+        guard let image = self.image else {
+            //MARK: TODO - handle couldn't get image :(
+            return
+        }
+
+        guard let imageData = image.jpegData(compressionQuality: 1.0) else {
+            //MARK: TODO - gracefully fail out without interrupting UX
+            return
+        }
+        FirebaseStorageService.manager.storeImage(image: imageData, completion: { [weak self] (result) in
+            switch result{
+            case .success(let url):
+                self?.imageURL = url
+            case .failure(let error):
+                //MARK: TODO - defer image not save alert, try again later. maybe make VC "dirty" to allow user to move on in nav stack
+                print(error)
+            }
+        })
+        dismiss(animated: true, completion: nil)
+    }
     
     private func presentPhotoPickerController() {
         DispatchQueue.main.async{
@@ -166,7 +198,7 @@ extension ImageUploadViewController: UIImagePickerControllerDelegate, UINavigati
         }
         self.image = image
         
-        guard let imageData = image.jpegData(compressionQuality: 0.8) else {
+        guard let imageData = image.jpegData(compressionQuality: 1.0) else {
             //MARK: TODO - gracefully fail out without interrupting UX
             return
         }

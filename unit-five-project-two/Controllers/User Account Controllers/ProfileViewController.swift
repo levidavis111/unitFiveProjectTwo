@@ -13,7 +13,11 @@ class ProfileViewController: UIViewController {
     var user: AppUser!
     var isCurrentUser = false
     
-    var posts = [Post]()
+    var posts = [Post]() {
+        didSet {
+            self.postCountLabel.text = "You have \(posts.count) posts"
+        }
+    }
     
     lazy var profileImageView: UIImageView = {
         let profileImage = UIImageView()

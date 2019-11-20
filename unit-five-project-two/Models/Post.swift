@@ -15,9 +15,9 @@ struct Post {
     let creatorID: String
     let dateCreated: Date?
     
-    init(photoURL: String, id: String, creatorID: String, dateCreated: Date? = nil) {
+    init(photoURL: String, creatorID: String, dateCreated: Date? = nil) {
         self.photoURL = photoURL
-        self.id = id
+        self.id = UUID().description
         self.creatorID = creatorID
         self.dateCreated = dateCreated
     }

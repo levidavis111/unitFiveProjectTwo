@@ -9,6 +9,15 @@
 import UIKit
 
 class FeedViewController: UIViewController {
+    
+    var posts = [Post]()
+    let user = FirebaseAuthService.manager.currentUser
+    
+    lazy var collectionView: UICollectionView = {
+        let collectionView = UICollectionView()
+        
+        return collectionView
+    }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -16,15 +25,21 @@ class FeedViewController: UIViewController {
         // Do any additional setup after loading the view.
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    override func viewWillAppear(_ animated: Bool) {
+        loadPosts()
     }
-    */
+    
+    private func loadPosts() {
+        guard let user = user else {return}
+        FirestoreService.manager.getPosts(forUserID: user.uid) { (result) in
+            switch result {
+            case .failure(let error):
+                print(error)
+            case .success(let posts):
+                self.posts = posts
+                print(posts)
+            }
+        }
+    }
 
 }
