@@ -12,7 +12,7 @@ import Photos
 class ImageUploadViewController: UIViewController {
     //MARK: UI Objects
     
-    var imageURL = URL? = nil
+    var imageURL: URL? = nil
     
     
     lazy var postButton: UIButton = {
