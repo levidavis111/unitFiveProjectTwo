@@ -9,7 +9,6 @@
 import UIKit
 
 class FeedViewController: UIViewController {
-    
     var posts = [Post]() {
         didSet {
             DispatchQueue.main.async {
@@ -102,6 +101,17 @@ extension FeedViewController: UICollectionViewDataSource {
         }
         
         return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let thisPost = posts[indexPath.row]
+        let detailVC = ImageDetailViewController()
+        detailVC.createdBy = user?.displayName
+        detailVC.dateCreated = "\(thisPost.dateCreated)"
+        detailVC.imageURL = thisPost.photoURL
+        
+        navigationController?.pushViewController(detailVC, animated: true)
+        
     }
     
     
