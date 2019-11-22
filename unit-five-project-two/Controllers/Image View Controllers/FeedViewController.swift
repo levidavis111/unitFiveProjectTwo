@@ -107,7 +107,10 @@ extension FeedViewController: UICollectionViewDataSource {
         let thisPost = posts[indexPath.row]
         let detailVC = ImageDetailViewController()
         detailVC.createdBy = user?.displayName
-        detailVC.dateCreated = "\(thisPost.dateCreated)"
+        if let dateCreated = thisPost.dateCreated {
+            detailVC.dateCreated = "\(dateCreated)"
+        } 
+        
         detailVC.imageURL = thisPost.photoURL
         
         navigationController?.pushViewController(detailVC, animated: true)

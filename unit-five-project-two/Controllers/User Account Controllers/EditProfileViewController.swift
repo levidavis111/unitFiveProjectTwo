@@ -11,6 +11,8 @@ import Photos
 
 class EditProfileViewController: UITabBarController {
     
+//    MARK: - Local Variables
+    
     var settingFromLogin = false
     
     var image = UIImage() {

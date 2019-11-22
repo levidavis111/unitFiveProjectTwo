@@ -10,6 +10,8 @@ import UIKit
 
 class ProfileViewController: UIViewController {
     
+//    MARK: - Local Variables
+    
     var user: AppUser!
     var isCurrentUser = false
     
@@ -18,6 +20,8 @@ class ProfileViewController: UIViewController {
             self.postCountLabel.text = "You have \(posts.count) posts"
         }
     }
+    
+//    MARK: - Instatiate UI Elements
     
     lazy var profileImageView: UIImageView = {
         let profileImage = UIImageView()
@@ -32,6 +36,8 @@ class ProfileViewController: UIViewController {
         label.text = "You have \(posts.count) posts"
         return label
     }()
+    
+//    MARK: - Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -49,6 +55,8 @@ class ProfileViewController: UIViewController {
         getPostsForThisUser()
     }
     
+//    MARK: - objc Methods
+    
     @objc private func editProfile() {
         navigationController?.pushViewController(EditProfileViewController(), animated: true)
     }
@@ -58,6 +66,7 @@ class ProfileViewController: UIViewController {
         navigationController?.pushViewController(LoginViewController(), animated: true)
     }
     
+//    MARK: - Private Methods
     
     private func getPostsForThisUser() {
         DispatchQueue.global(qos: .userInitiated).async { [weak self] in
@@ -108,6 +117,8 @@ class ProfileViewController: UIViewController {
 }
 
 extension ProfileViewController {
+//    MARK: - Constrain Subviews
+    
     private func addSubviews() {
         view.addSubview(profileImageView)
         view.addSubview(postCountLabel)

@@ -69,22 +69,20 @@ class LoginViewController: UIViewController {
                                                   attributes: [NSAttributedString.Key.font: UIFont(name: "Verdana-Bold", size: 14)!,
                                                                NSAttributedString.Key.foregroundColor:  UIColor(red: 17/255, green: 154/255, blue: 237/255, alpha: 1)]))
         button.setAttributedTitle(attributedTitle, for: .normal)
-        //        button.setTitle("Sign Up", for: .normal)
-        //        button.backgroundColor = .white
-        //        button.setTitleColor(#colorLiteral(red: 0.1764705926, green: 0.4980392158, blue: 0.7568627596, alpha: 1), for: .normal)
         button.addTarget(self, action: #selector(showSignUp), for: .touchUpInside)
         return button
     }()
     
-    //MARK: Lifecycle methods
+    //MARK: - Lifecycle methods
     
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
-        setupSubViews()
+        addSubviews()
+        constrainSubViews()
     }
     
-    //MARK: Obj-C methods
+    //MARK: - Obj-C methods
     
     @objc func validateFields() {
         guard emailTextField.hasText, passwordTextField.hasText else {
@@ -108,8 +106,6 @@ class LoginViewController: UIViewController {
             return
         }
         
-        //MARK: TODO - remove whitespace (if any) from email/password
-        
         guard email.isValidEmail else {
             showAlert(with: "Error", and: "Please enter a valid email")
             return
@@ -125,7 +121,7 @@ class LoginViewController: UIViewController {
         }
     }
     
-    //MARK: Private methods
+    //MARK: - Private methods
     
     private func showAlert(with title: String, and message: String) {
         let alertVC = UIAlertController(title: title, message: message, preferredStyle: .alert)
@@ -142,11 +138,9 @@ class LoginViewController: UIViewController {
             guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
                 let sceneDelegate = windowScene.delegate as? SceneDelegate, let window = sceneDelegate.window
                 else {
-                    //MARK: TODO - handle could not swap root view controller
                     return
             }
             
-            //            MARK: TODO - refactor this logic into scene delegate
             UIView.transition(with: window, duration: 0.3, options: .transitionFlipFromBottom, animations: {
                 if FirebaseAuthService.manager.currentUser?.photoURL != nil {
                     window.rootViewController = TabBarViewController()
@@ -161,17 +155,20 @@ class LoginViewController: UIViewController {
         }
     }
     
-    //MARK: UI Setup
+    //MARK: - Setup UI Elements
     
-    private func setupSubViews() {
+    private func addSubviews() {
+        view.addSubview(logoLabel)
+        view.addSubview(createAccountButton)
+    }
+    
+    private func constrainSubViews() {
         setupLogoLabel()
         setupCreateAccountButton()
         setupLoginStackView()
     }
     
     private func setupLogoLabel() {
-        view.addSubview(logoLabel)
-        
         logoLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             logoLabel.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: 60),
@@ -185,7 +182,7 @@ class LoginViewController: UIViewController {
         stackView.spacing = 15
         stackView.distribution = .fillEqually
         self.view.addSubview(stackView)
-        
+    
         stackView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             stackView.bottomAnchor.constraint(equalTo: createAccountButton.topAnchor, constant: -50),
@@ -195,10 +192,7 @@ class LoginViewController: UIViewController {
     }
     
     private func setupCreateAccountButton() {
-        view.addSubview(createAccountButton)
-        
         createAccountButton.translatesAutoresizingMaskIntoConstraints = false
-       
         NSLayoutConstraint.activate([
             createAccountButton.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             createAccountButton.trailingAnchor.constraint(equalTo: view.trailingAnchor),

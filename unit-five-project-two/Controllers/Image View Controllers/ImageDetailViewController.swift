@@ -12,7 +12,7 @@ class ImageDetailViewController: UIViewController {
     
     var imageURL: String!
     var createdBy: String!
-    var dateCreated: String!
+    var dateCreated: String?
     
     lazy var imageView: UIImageView = {
         let imageView = UIImageView()
@@ -34,9 +34,7 @@ class ImageDetailViewController: UIViewController {
         label.numberOfLines = 0
         label.textColor = .black
         if let dateCreated = self.dateCreated {
-            label.text = "Date Created: \(dateCreated.components(separatedBy: " ")[0])"
-        } else {
-            label.text = "No Date"
+            label.text = "Created on: \(dateCreated.components(separatedBy: " ")[0])"
         }
         
         return label
