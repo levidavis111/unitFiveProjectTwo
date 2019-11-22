@@ -9,6 +9,9 @@
 import UIKit
 
 class FeedViewController: UIViewController {
+    
+//    MARK: - Local Variables
+    
     var posts = [Post]() {
         didSet {
             DispatchQueue.main.async {
@@ -17,8 +20,11 @@ class FeedViewController: UIViewController {
             }
         }
     }
+    
     let user = FirebaseAuthService.manager.currentUser
     let cellSpacing: CGFloat = 5.0
+    
+//    MARK: - Instantiate UI Elements
     
     lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -29,18 +35,21 @@ class FeedViewController: UIViewController {
         return collectionView
     }()
     
+//    MARK: - Lifecycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         addSubviews()
         constrainSubviews()
         addDelegates()
         loadPosts()
-        // Do any additional setup after loading the view.
     }
     
     override func viewWillAppear(_ animated: Bool) {
         loadPosts()
     }
+    
+//    MARK: - Private Methods
     
     private func addDelegates() {
         collectionView.delegate = self
@@ -59,6 +68,8 @@ class FeedViewController: UIViewController {
             }
         }
     }
+    
+//    MARK: - Setup UI Elements
     
     private func addSubviews() {
         view.addSubview(collectionView)

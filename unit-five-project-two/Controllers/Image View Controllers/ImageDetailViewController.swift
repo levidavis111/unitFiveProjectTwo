@@ -10,9 +10,13 @@ import UIKit
 
 class ImageDetailViewController: UIViewController {
     
+//    MARK: - Local Variables
+    
     var imageURL: String!
     var createdBy: String!
     var dateCreated: String?
+    
+//    MARK: - Instantiate UI Elements
     
     lazy var imageView: UIImageView = {
         let imageView = UIImageView()
@@ -39,6 +43,8 @@ class ImageDetailViewController: UIViewController {
         
         return label
     }()
+    
+//    MARK: - Lifecycle
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -46,8 +52,25 @@ class ImageDetailViewController: UIViewController {
         addSubviews()
         constrainSubviews()
         loadImageView()
-        // Do any additional setup after loading the view.
     }
+    
+//    MARK: - Private Methods
+    private func loadImageView() {
+        ImageManager.manager.getImage(urlStr: imageURL) { (result) in
+            DispatchQueue.main.async {
+                switch result {
+                case .failure(let error):
+                    print(error)
+                case .success(let image):
+                    self.imageView.image = image
+                }
+
+            }
+            
+        }
+    }
+    
+//    MARK: - Setup UI Elements
     
     private func addSubviews() {
         view.addSubview(imageView)
@@ -83,19 +106,6 @@ class ImageDetailViewController: UIViewController {
          createdDateLabel.leadingAnchor.constraint(equalTo: imageView.leadingAnchor)].forEach{$0.isActive = true}
     }
     
-    private func loadImageView() {
-        ImageManager.manager.getImage(urlStr: imageURL) { (result) in
-            DispatchQueue.main.async {
-                switch result {
-                case .failure(let error):
-                    print(error)
-                case .success(let image):
-                    self.imageView.image = image
-                }
 
-            }
-            
-        }
-    }
 
 }

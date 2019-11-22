@@ -10,7 +10,7 @@ import UIKit
 import Photos
 
 class ImageUploadViewController: UIViewController {
-    //MARK: UI Objects
+//   MARK: - Local Variables
     
     var image = UIImage(named: "default") {
         didSet {
@@ -19,6 +19,8 @@ class ImageUploadViewController: UIViewController {
     }
     
     var imageURL: URL? = nil
+    
+     //MARK: - UI Objects
     
     lazy var selectedImageView: UIImageView = {
         let imageView = UIImageView()
@@ -53,15 +55,15 @@ class ImageUploadViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
+        addSubviews()
         setupImageView()
         setupAddImageButton()
         setupPostButton()
     }
     
-    //MARK: Obj-C Methods
+    //MARK: Objc Methods
     
     @objc private func addImagePressed() {
-        //MARK: TODO - action sheet with multiple media options
         switch PHPhotoLibrary.authorizationStatus() {
         case .notDetermined, .denied, .restricted:
             PHPhotoLibrary.requestAuthorization({[weak self] status in
@@ -69,10 +71,8 @@ class ImageUploadViewController: UIViewController {
                 case .authorized:
                     self?.presentPhotoPickerController()
                 case .denied:
-                    //MARK: TODO - set up more intuitive UI interaction
                     print("Denied photo library permissions")
                 default:
-                    //MARK: TODO - set up more intuitive UI interaction
                     print("No usable status")
                 }
             })
@@ -109,12 +109,10 @@ class ImageUploadViewController: UIViewController {
     
     private func storeImage() {
         guard let image = self.image else {
-            //MARK: TODO - handle couldn't get image :(
             return
         }
 
         guard let imageData = image.jpegData(compressionQuality: 1.0) else {
-            //MARK: TODO - gracefully fail out without interrupting UX
             return
         }
         FirebaseStorageService.manager.storeImage(image: imageData, completion: { [weak self] (result) in
@@ -122,7 +120,6 @@ class ImageUploadViewController: UIViewController {
             case .success(let url):
                 self?.imageURL = url
             case .failure(let error):
-                //MARK: TODO - defer image not save alert, try again later. maybe make VC "dirty" to allow user to move on in nav stack
                 print(error)
             }
         })
@@ -135,7 +132,6 @@ class ImageUploadViewController: UIViewController {
             imagePickerViewController.delegate = self
             imagePickerViewController.sourceType = .photoLibrary
             imagePickerViewController.allowsEditing = true
-//            imagePickerViewController.mediaTypes = ["public.image"]
             self.present(imagePickerViewController, animated: true, completion: nil)
         }
     }
@@ -165,8 +161,13 @@ class ImageUploadViewController: UIViewController {
     
     //MARK: UI Setup
     
-    private func setupImageView() {
+    private func addSubviews() {
         view.addSubview(selectedImageView)
+        view.addSubview(postButton)
+        view.addSubview(addImageButton)
+    }
+    
+    private func setupImageView() {
         selectedImageView.translatesAutoresizingMaskIntoConstraints = false
         [selectedImageView.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
          selectedImageView.centerYAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerYAnchor, constant: -100),
@@ -175,14 +176,12 @@ class ImageUploadViewController: UIViewController {
     }
     
     private func setupPostButton() {
-        view.addSubview(postButton)
         postButton.translatesAutoresizingMaskIntoConstraints = false
         [postButton.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
          postButton.topAnchor.constraint(equalTo: addImageButton.bottomAnchor, constant: 30)].forEach{$0.isActive = true}
     }
     
     private func setupAddImageButton() {
-        view.addSubview(addImageButton)
         addImageButton.translatesAutoresizingMaskIntoConstraints = false
         [addImageButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
          addImageButton.topAnchor.constraint(equalTo: selectedImageView.bottomAnchor, constant: 30)].forEach{$0.isActive = true}
@@ -193,13 +192,11 @@ class ImageUploadViewController: UIViewController {
 extension ImageUploadViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         guard let image = info[.editedImage] as? UIImage else {
-            //MARK: TODO - handle couldn't get image :(
             return
         }
         self.image = image
         
         guard let imageData = image.jpegData(compressionQuality: 1.0) else {
-            //MARK: TODO - gracefully fail out without interrupting UX
             return
         }
         
@@ -209,7 +206,6 @@ extension ImageUploadViewController: UIImagePickerControllerDelegate, UINavigati
                 //Note - defer UI response, update user image url in auth and in firestore when save is pressed
                 self?.imageURL = url
             case .failure(let error):
-                //MARK: TODO - defer image not save alert, try again later. maybe make VC "dirty" to allow user to move on in nav stack
                 print(error)
             }
         })
